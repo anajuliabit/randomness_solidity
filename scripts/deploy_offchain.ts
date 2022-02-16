@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const ContractFactory = await ethers.getContractFactory(
-    "contracts/Oracle.sol:Pig"
+    "contracts/OffChain.sol:Pig"
   );
   const deploy = await ContractFactory.deploy();
 

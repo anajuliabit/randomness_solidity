@@ -18,6 +18,7 @@ contract Pig is ERC721 {
     event MintRequested(address to, uint256 targetBlock);
     event PigMinted(address to, uint256 id, Rarity rarity);
 
+    // Mapping from address to array of target block
     mapping(address => uint256[]) public mintRequests;
     mapping(address => uint256[]) public tokenIds;
     mapping(uint256 => Rarity) public pigRarity;
@@ -30,13 +31,12 @@ contract Pig is ERC721 {
 
     function mint() external payable {
         require(msg.value == mintPrice, "Wrong amount of native token");
-        address to = _msgSender();
 
-        requestRandomPig(to);
+        requestRandomPig(_msgSender());
     }
 
-    function requestRandomPig(address to) private {
-        // Needed to be + 1 to avoid miner withholding
+    function requestRandomPig(address to) internal {
+        // Needed to be + 1 to avoid miner withholding and manipulation from the caller
         uint256 targetBlock = block.number + 1;
 
         mintRequests[to].push(targetBlock);
@@ -45,15 +45,18 @@ contract Pig is ERC721 {
     }
 
     function processMintRequests() external {
-        address to = msg.sender;
+        address to = _msgSender();
 
         uint256[] storage requests = mintRequests[to];
         for (uint256 i = requests.length; i > 0; --i) {
+            // Nedeed to be o block defined before to avoid miner withholding
             uint256 targetBlock = requests[i - 1];
+            // block.number needed to be the block defined in the previuous steps to avoid miner withholding
             require(block.number > targetBlock, "Target block not arrived");
 
             uint256 seed = uint256(blockhash(targetBlock));
-            // 256 blocks after
+            // Ethereum blockchain only allows access to the 256 most recent blocks
+            // in a real scenario, a revert case should be implement in case that blockhash is not available anymore
             require(seed != 0, "Hash block isn't available");
 
             createPig(to, seed);
@@ -73,5 +76,9 @@ contract Pig is ERC721 {
 
     function getRarity(uint256 id) public view returns (Rarity) {
         return pigRarity[id];
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return idCounter.current();
     }
 }

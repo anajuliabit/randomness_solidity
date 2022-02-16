@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const ContractFactory = await ethers.getContractFactory(
-    "contracts/PRNG.sol:Pig"
+    "contracts/OnChain.sol:Pig"
   );
   const deploy = await ContractFactory.deploy();
 

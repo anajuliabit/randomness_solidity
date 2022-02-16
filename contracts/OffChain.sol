@@ -88,4 +88,8 @@ contract Pig is ERC721, VRFConsumerBase {
     function getRarity(uint256 id) public view returns (Rarity) {
         return pigRarity[id];
     }
+
+    function totalSupply() public view returns (uint256) {
+        return idCounter.current();
+    }
 }

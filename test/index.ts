@@ -2,13 +2,14 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Pig } from "../typechain";
 
 describe("Pseudo RNG", function () {
-  let contract: Pig;
+  let contract: any;
   let user: SignerWithAddress;
   this.beforeAll(async () => {
-    const ContractFactory = await ethers.getContractFactory("Pig");
+    const ContractFactory = await ethers.getContractFactory(
+      "contracts/OnChain.sol:Pig"
+    );
     contract = await ContractFactory.deploy();
 
     await contract.deployed();

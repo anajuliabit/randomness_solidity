@@ -1,10 +1,13 @@
-# Advanced Sample Hardhat Project
+# Randomness Solidity
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+This project is a demonstration of two solutions for the generation of pseudo-random numbers in Solidity.
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
+## Solutions
 
-Try running some of the following tasks:
+- [OnChain](/contracts/OnChain.sol): Solution with 2 on chain steps to remove any possibility of taking advantage of the participants.
+- [OffChain](/contracts/OffChain) Solution using oracle.
+
+## Tasks
 
 ```shell
 npx hardhat accounts
@@ -40,7 +43,3 @@ Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_
 ```shell
 npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 ```
-
-# Performance optimizations
-
-For faster runs of your tests and scripts, consider skipping ts-node's type checking by setting the environment variable `TS_NODE_TRANSPILE_ONLY` to `1` in hardhat's environment. For more details see [the documentation](https://hardhat.org/guides/typescript.html#performance-optimizations).
