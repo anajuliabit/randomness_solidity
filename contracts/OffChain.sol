@@ -22,7 +22,6 @@ contract Pig is ERC721, VRFConsumerBase {
     event MintRequested(address to, bytes32 requestId);
     event PigMinted(address to, uint256 id, Rarity rarity);
 
-    mapping(address => uint256[]) public mintRequests;
     mapping(address => uint256[]) public tokenIds;
     mapping(uint256 => Rarity) public pigRarity;
 
@@ -45,9 +44,8 @@ contract Pig is ERC721, VRFConsumerBase {
 
     function mint() external payable {
         require(msg.value == mintPrice, "Wrong amount of native token");
-        address to = _msgSender();
 
-        requestRandomPig(to);
+        requestRandomPig(_msgSender());
     }
 
     function requestRandomPig(address to) private {
@@ -69,16 +67,6 @@ contract Pig is ERC721, VRFConsumerBase {
         uint256 id = requestToTokenId[requestId];
         address to = requestToSender[requestId];
 
-        Rarity rarity = Rarity(randomNumber % 3);
-        pigRarity[id] = Rarity(rarity);
-        _safeMint(to, id);
-        emit PigMinted(to, id, rarity);
-    }
-
-    function createPig(address to, uint256 seed) internal {
-        uint256 id = idCounter.current();
-        idCounter.increment();
-        uint256 randomNumber = uint256(keccak256(abi.encode(seed, id)));
         Rarity rarity = Rarity(randomNumber % 3);
         pigRarity[id] = Rarity(rarity);
         _safeMint(to, id);

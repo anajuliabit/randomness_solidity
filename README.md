@@ -7,6 +7,11 @@ This project is a demonstration of two solutions for the generation of pseudo-ra
 - [OnChain](/contracts/OnChain.sol): Solution with 2 on chain steps to remove any possibility of taking advantage of the participants.
 - [OffChain](/contracts/OffChain) Solution using oracle.
 
+## Mumbai address
+
+- OnChain: [0xf08285fc747c17140ff24b98ab46e58d4dc11fec](https://mumbai.polygonscan.com/address/0xf08285fc747c17140ff24b98ab46e58d4dc11fec)
+- OffChain: [0xa48b924a93b1495b90f170ee90234c9b04868846](https://mumbai.polygonscan.com/address/0xa48b924a93b1495b90f170ee90234c9b04868846)
+
 ## Tasks
 
 ```shell

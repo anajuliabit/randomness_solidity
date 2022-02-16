@@ -36,7 +36,7 @@ contract Pig is ERC721 {
     }
 
     function requestRandomPig(address to) internal {
-        // Needed to be + 1 to avoid miner withholding and manipulation from the caller
+        // Needed to be + 1 to make impossible to predict
         uint256 targetBlock = block.number + 1;
 
         mintRequests[to].push(targetBlock);
@@ -49,9 +49,8 @@ contract Pig is ERC721 {
 
         uint256[] storage requests = mintRequests[to];
         for (uint256 i = requests.length; i > 0; --i) {
-            // Nedeed to be o block defined before to avoid miner withholding
-            uint256 targetBlock = requests[i - 1];
             // block.number needed to be the block defined in the previuous steps to avoid miner withholding
+            uint256 targetBlock = requests[i - 1];
             require(block.number > targetBlock, "Target block not arrived");
 
             uint256 seed = uint256(blockhash(targetBlock));
